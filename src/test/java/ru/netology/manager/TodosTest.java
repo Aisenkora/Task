@@ -2,10 +2,16 @@ package ru.netology.manager;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import ru.netology.task.Epic;
 import ru.netology.task.Meeting;
 import ru.netology.task.SimpleTask;
 import ru.netology.task.Task;
+
+import java.util.Arrays;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TodosTest {
 
@@ -185,4 +191,22 @@ public class TodosTest {
         Assertions.assertArrayEquals(expected, actual);
     }
 
+    @Test
+    public void SearchSeveralSimpleTask() {
+        SimpleTask simpleTask = new SimpleTask(5, "Позвонить родителям");
+        SimpleTask simpleTask2 = new SimpleTask(2, "Позвонить сестре");
+        SimpleTask simpleTask3 = new SimpleTask(7, "Позвонить начальнику");
+        SimpleTask simpleTask4 = new SimpleTask(12, "Прочитать книгу");
+        Todos todos = new Todos();
+
+        todos.add(simpleTask);
+        todos.add(simpleTask2);
+        todos.add(simpleTask3);
+        todos.add(simpleTask4);
+        String query = "Позвонить";
+
+        Task[] expected = {simpleTask, simpleTask2, simpleTask3};
+        Task[] actual = todos.search(query);
+        Assertions.assertArrayEquals(expected, actual);
+    }
 }
